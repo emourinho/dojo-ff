@@ -1,16 +1,13 @@
-import styled from "@emotion/styled";
-
-import NxWelcome from "./nx-welcome";
-
-const StyledApp = styled.div`
-  // Your style here
-`;
+import { FeatureFlag } from '@dojo-ff/domain';
+import { DivContainer } from './styles';
 
 export function App() {
+  const ff = new FeatureFlag('Hello World');
+
   return (
-    <StyledApp>
-      <NxWelcome title="frontend" />
-    </StyledApp>
+    <DivContainer>
+      <h1>{ff.name}</h1>
+    </DivContainer>
   );
 }
 
