@@ -1,5 +1,5 @@
 import { DivContainer } from './styles';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 const query = gql`
   query XUXU {
