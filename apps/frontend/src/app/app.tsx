@@ -1,14 +1,21 @@
-import { FeatureFlag } from '@dojo-ff/domain';
 import { DivContainer } from './styles';
+import { useLazyQuery, gql } from '@apollo/client';
+
+const query = gql`
+  query XUXU {
+    featureFlags {
+      name
+    }
+  }
+`;
 
 export function App() {
-  const ff = new FeatureFlag('Hello World');
+  const [loadFeaturesFlags, { data, loading }] = useLazyQuery(query);
 
-  return (
-    <DivContainer>
-      <h1>{ff.name}</h1>
-    </DivContainer>
-  );
+  if (loading) {
+    return <DivContainer>Carregando</DivContainer>;
+  }
+  return <DivContainer>{data.map((x: any) => x.id).join()}</DivContainer>;
 }
 
 export default App;

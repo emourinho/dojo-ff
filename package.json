@@ -8,6 +8,7 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.12",
     "@apollo/server": "^4.6.0",
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
