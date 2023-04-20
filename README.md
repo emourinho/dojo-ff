@@ -20,8 +20,8 @@
   - [X] Criar um useCase DeleteFeatureFlag
 
 ### Tarefas
-- [ ] Criar types graphql
-- [ ] Um servidor apollo-server
+- [X] Criar types graphql
+- [X] Um servidor apollo-server
 
 ## Frontend
 ### Tarefas
