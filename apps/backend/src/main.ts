@@ -3,43 +3,66 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import {
   FindAllFeatureFlagUseCase,
   FindOneFeatureFlagUseCase,
+  CreateFeatureFlagUseCase,
 } from './application';
 import { FeatureFlagInMemoryRepository } from './repository';
+import { IFeatureFlag } from '@dojo-ff/domain';
 const repo = new FeatureFlagInMemoryRepository();
 
 const typeDefs = `#graphql
 
   type FeatureFlag {
-    id: Int
+    id: Long
     name: String
     enabled: Boolean
   }
 
+  type Mutation {
+    createFeatureFlag(name: String!, enabled: Boolean!): FeatureFlag
+  }
+
+
   type Query {
     featureFlags: [FeatureFlag]
-    featureFlag (id: Int!): FeatureFlag
+    featureFlag (id: Long!): FeatureFlag
+    
   }
 `;
 
-const FindAllFeatureFlagResolver = async () => {
+const findAllFeatureFlagResolver = async () => {
   const findAllFeatureFlagUseCase = new FindAllFeatureFlagUseCase(repo);
   const resultFindAllFeatureFlag = await findAllFeatureFlagUseCase.execute();
   return resultFindAllFeatureFlag;
 };
-const findOneFeatureFlagUseCaseResolver = async (id: number) => {
+const findOneFeatureFlagResolver = async (id: number) => {
   const findOneFeatureFlagUseCase = new FindOneFeatureFlagUseCase(repo);
   const resultFindOneFeatureFlagUseCase =
     await findOneFeatureFlagUseCase.execute(id);
   return resultFindOneFeatureFlagUseCase;
 };
+const createFeatureFlagResolver = async (
+  newFeatureFlag: Omit<IFeatureFlag, 'id'>
+) => {
+  const createFeatureFlagUseCase = new CreateFeatureFlagUseCase(repo);
+  const resultCreateFeatureFlagUseCase = await createFeatureFlagUseCase.execute(
+    newFeatureFlag
+  );
+  return resultCreateFeatureFlagUseCase;
+};
 
 const resolvers = {
   Query: {
-    featureFlags: FindAllFeatureFlagResolver,
+    featureFlags: findAllFeatureFlagResolver,
     featureFlag: async (parent, args) => {
       console.log(parent, args);
       const { id } = args;
-      return findOneFeatureFlagUseCaseResolver(id);
+      return findOneFeatureFlagResolver(id);
+    },
+  },
+  Mutation: {
+    createFeatureFlag: async (parent, args) => {
+      console.log(parent, args);
+      return createFeatureFlagResolver(args);
     },
   },
 };
