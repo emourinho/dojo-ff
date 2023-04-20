@@ -1,6 +1,9 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { FindAllFeatureFlagUseCase } from './application';
+import { FeatureFlagInMemoryRepository } from './repository';
+
+const repo = new FeatureFlagInMemoryRepository();
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -10,7 +13,7 @@ const typeDefs = `#graphql
 
   # This "Book" type defines the queryable fields for every book in our data source.
   type FeatureFlag {
-    id: Number
+    id: Int
     name: String
     enabled: Boolean
   }
@@ -25,17 +28,24 @@ const typeDefs = `#graphql
 
 // Resolvers define how to fetch the types defined in your schema.
 // This resolver retrieves books from the "books" array above.
-// const resolvers = {
-//   Query: {
-//     featureFlags: async () => await new  FindAllFeatureFlagUseCase().execute(),
-//   },
-// };
+
+const FindAllFeatureFlagResolver = async () => {
+  const findAllFeatureFlagUseCase = new FindAllFeatureFlagUseCase(repo);
+  const resultFindAllFeatureFlag = await findAllFeatureFlagUseCase.execute();
+  return resultFindAllFeatureFlag;
+};
+
+const resolvers = {
+  Query: {
+    featureFlags: FindAllFeatureFlagResolver,
+  },
+};
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
   typeDefs,
-  // resolvers,
+  resolvers,
 });
 
 const main = async () => {
@@ -48,9 +58,6 @@ const main = async () => {
   });
 
   console.log(`🚀  Server ready at: ${url}`);
-
-
-
 };
 
 main();

@@ -7,6 +7,11 @@ const featureFlagsInMemory: FeatureFlag[] = [
     name: 'Whatsapp cross',
     enabled: true,
   },
+  {
+    id: 456,
+    name: 'Teste Hércules',
+    enabled: false,
+  },
 ];
 
 export class FeatureFlagInMemoryRepository implements IFeatureFlagRepository {
