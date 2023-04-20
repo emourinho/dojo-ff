@@ -1,21 +1,26 @@
 import { DivContainer } from './styles';
-import { useLazyQuery, gql } from '@apollo/client';
+import { useQuery, gql } from '@apollo/client';
 
 const query = gql`
   query XUXU {
     featureFlags {
+      id
       name
+      enabled
     }
   }
 `;
 
 export function App() {
-  const [loadFeaturesFlags, { data, loading }] = useLazyQuery(query);
-
+  const { data, loading } = useQuery(query);
   if (loading) {
     return <DivContainer>Carregando</DivContainer>;
   }
-  return <DivContainer>{data.map((x: any) => x.id).join()}</DivContainer>;
+  return (
+    <DivContainer>
+      {data.featureFlags.map((x: any) => x.name).join()}
+    </DivContainer>
+  );
 }
 
 export default App;
