@@ -17,7 +17,7 @@ const typeDefs = `#graphql
 
   type Query {
     featureFlags: [FeatureFlag]
-    featureFlag (id: Int): FeatureFlag
+    featureFlag (id: Int!): FeatureFlag
   }
 `;
 
@@ -26,7 +26,7 @@ const FindAllFeatureFlagResolver = async () => {
   const resultFindAllFeatureFlag = await findAllFeatureFlagUseCase.execute();
   return resultFindAllFeatureFlag;
 };
-const FindOneFeatureFlagUseCaseResolver = async (id: number) => {
+const findOneFeatureFlagUseCaseResolver = async (id: number) => {
   const findOneFeatureFlagUseCase = new FindOneFeatureFlagUseCase(repo);
   const resultFindOneFeatureFlagUseCase =
     await findOneFeatureFlagUseCase.execute(id);
@@ -37,11 +37,9 @@ const resolvers = {
   Query: {
     featureFlags: FindAllFeatureFlagResolver,
     featureFlag: async (parent, args) => {
-      const {id} = args
-      const findOneFeatureFlagUseCase = new FindOneFeatureFlagUseCase(repo);
-      const resultFindOneFeatureFlagUseCase =
-        await findOneFeatureFlagUseCase.execute(id);
-      return resultFindOneFeatureFlagUseCase;
+      console.log(parent, args)
+      const { id } = args
+      return findOneFeatureFlagUseCaseResolver(id)
     }
   },
 };
