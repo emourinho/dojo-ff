@@ -1,18 +1,30 @@
 import { useState } from "react";
 import { gql, useMutation } from '@apollo/client';
 
+
+const mutation = gql`
+  mutation Mutation($name: String!, $enabled: Boolean!) {
+  createFeatureFlag(name: $name, enabled: $enabled) {
+    enabled
+    id
+    name
+  }
+}
+ `;
+
 export function Form() {
   const [name, setName] = useState("")
   const [enabled, setEnabled] = useState(true)
-
-  async function handleSubmit() {
-    const mutation = gql`
-      mutation cadastro {
-        featureFlags {
-
-        }
+  const [addFeatureFlag, { data }] = useMutation(mutation)
+  console.log(data)
+  async function handleSubmit(event: any) {
+    event.preventDefault()
+    addFeatureFlag({
+      variables: {
+        name,
+        enabled
       }
-`;
+    })
   }
 
   function handleChangeName(event: any) {

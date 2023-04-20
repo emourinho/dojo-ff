@@ -11,6 +11,8 @@ const repo = new FeatureFlagInMemoryRepository();
 
 const typeDefs = `#graphql
 
+scalar Long
+
   type FeatureFlag {
     id: Long
     name: String
@@ -25,7 +27,7 @@ const typeDefs = `#graphql
   type Query {
     featureFlags: [FeatureFlag]
     featureFlag (id: Long!): FeatureFlag
-    
+
   }
 `;
 

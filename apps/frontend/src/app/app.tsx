@@ -1,5 +1,6 @@
 import { DivContainer } from './styles';
 import { useQuery, useMutation, gql } from '@apollo/client';
+import { Form } from './form';
 
 const query = gql`
   query XUXU {
@@ -18,7 +19,12 @@ export function App() {
   }
   return (
     <DivContainer>
-      {data.featureFlags.map((x: any) => x.name).join()}
+      <div>
+        <Form />
+      </div>
+      <div>
+        {data.featureFlags.map((x: any) => x.name).join()}
+      </div>
     </DivContainer>
   );
 }
