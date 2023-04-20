@@ -13,12 +13,11 @@
 ## Backend
 
   ### Preparação
-  - [ ] Criar um repository FeatureFlag (CRUD inMemory)
-  - [ ] Criar um useCase CreateFeatureFlag
-  - [ ] Criar um useCase ReadFeatureFlag
-  - [ ] Criar um useCase UpdateFeatureFlag
-  - [ ] Criar um useCase DeleteFeatureFlag
-  - [ ] Create useCase Create FeatureFolder
+  - [X] Criar um repository FeatureFlag (CRUD inMemory)
+  - [X] Criar um useCase CreateFeatureFlag
+  - [X] Criar um useCase ReadFeatureFlag
+  - [X] Criar um useCase UpdateFeatureFlag
+  - [X] Criar um useCase DeleteFeatureFlag
 
 ### Tarefas
 - [ ] Criar types graphql
@@ -27,3 +26,12 @@
 ## Frontend
 ### Tarefas
 - [ ]
+
+
+# Ordem 
+### Everton
+### Ricardo
+### Hercules
+### Chris
+### Roberto
+### Ana
